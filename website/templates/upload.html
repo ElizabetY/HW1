@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+</head>
+<body>
+    <h1>Upload a new file</h1>
+    <form method="post" action="{{ url_for('upload.upload_image') }}" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if error %}
+    <p style="color: red;">Error: {{ error }}</p>
+    {% endif %}
+
+    {% if objects %}
+    <h2>Detected Objects:</h2>
+    <ul>
+        {% for obj in objects %}
+        <li>{{ obj.name }} ({{ obj.score }})</li>
+        {% endfor %}
+    </ul>
+    <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+    {% endif %}
+
+    <a href="{{ url_for('views.home') }}">Back to Home</a>
+</body>
+</html>

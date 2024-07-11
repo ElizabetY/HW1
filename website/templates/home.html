@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1 align="center">Notes</h1>
+  <div align="center">
+    <a href="{{ url_for('upload.upload_form') }}" class="btn btn-primary">Go to Upload Page</a>
+  </div>
+  <ul class="list-group list-group-flush mt-4" id="notes">
+    {% for note in user.notes %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ note.data }}
+      <form action="/delete-note" method="POST" style="display: inline;">
+        <input type="hidden" name="note_id" value="{{ note.id }}">
+        <button type="submit" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
